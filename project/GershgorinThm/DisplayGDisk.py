@@ -4,9 +4,9 @@ import numpy as np
 
 
 class GDisk(Scene):
-    matrix_content = [[1.j, 1.j, 0.5],
-                      [1, 3. + 0.5j, 0.5],
-                      [1.5, 0.2, 4]]
+    matrix_content = [[1, 0, 5.1],
+                      [-2.6, 3 + 3j, 0],
+                      [0, -3.5, 5 + 1j]]
 
     def construct(self):
         matrix_object = Matrix(self.matrix_content,
@@ -17,8 +17,8 @@ class GDisk(Scene):
                                right_bracket=")")
 
         plane = ComplexPlane(
-            x_range=[-1, 5],
-            y_range=[-1, 2.5]
+            x_range=[-5, 7.5],
+            y_range=[-5, 5.5]
         ).add_coordinates()
         # display ordinate and matrix
         disk_group = Group(plane, matrix_object).arrange_in_grid(buff=0.5)
@@ -27,7 +27,6 @@ class GDisk(Scene):
         def i_th_g_disk(matrix, i):
             center = matrix[i][i]
             center_point = Dot(plane.n2p(center), color=YELLOW)
-            center_label = MathTex((center.real, center.imag)).next_to(center_point, UP, 0.03).scale(0.5)
 
             r = 0
 
@@ -55,7 +54,7 @@ class GDisk(Scene):
 
         w, v = LA.eig(np.array(self.matrix_content))
         w = np.round(w, 2)
-        evalue_text = Text("Eigenvalues are: "+np.array2string(w, separator=', ')).next_to(disk_group, UP).scale(0.7)
+        evalue_text = Text("Eigenvalues are: " + np.array2string(w, separator=', ')).next_to(disk_group, UP).scale(0.7)
         self.play(Write(evalue_text))
         self.remove(*self.mobjects)
         self.add(disk_group, evalue_text)
