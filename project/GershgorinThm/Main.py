@@ -20,7 +20,7 @@ class GDisk(Scene):
             y_range=[-1, 2.5]
         ).add_coordinates()
         # display ordinate and matrix
-        disk_group = Group(plane, matrix_object).arrange_in_grid(buff=2)
+        disk_group = Group(plane, matrix_object).arrange_in_grid(buff=0.5)
         self.add(disk_group)
 
         def i_th_g_disk(matrix, i):
@@ -77,13 +77,17 @@ class GDisk(Scene):
         self.wait(2)
 
         w, v = LA.eig(np.array(self.matrix_content))
-        evalue_tex = Tex('Eigenvalues are: ', np.round(w, 2)).next_to(disk_group, UP).scale(0.7)
-        self.play(Write(evalue_tex))
+        w = np.round(w, 2)
+        evalue_text = Text("Eigenvalues are: "+np.array2string(w, separator=', ')).next_to(disk_group, UP).scale(0.7)
+        self.play(Write(evalue_text))
         self.remove(*self.mobjects)
-        self.add(disk_group, evalue_tex)
+        self.add(disk_group, evalue_text)
 
         self.wait(2)
         for e in w:
             evalue_point = Dot(plane.n2p(e), color=BLUE)
             self.play(FadeIn(evalue_point))
+            self.play(Write(MathTex((e.real, e.imag)).next_to(evalue_point, UP, 0.03).scale(0.5)))
+
+        self.remove(evalue_text)
         self.wait(3)
