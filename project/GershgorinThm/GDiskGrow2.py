@@ -14,9 +14,9 @@ class GDisk(Scene):
             change = d.get_value()
             matrix = np.array(matrix)
             addition = np.array(
-                [[0, 0, 5.1],
-                 [-2.6, 0, 0],
-                 [0, -3.5, 0]]
+                [[0, 1j, 0.5],
+                 [1, 0, 0.5],
+                 [1.5, 0.2, 0]]
             ) * change
             return (matrix + addition).tolist()
 
@@ -38,7 +38,7 @@ class GDisk(Scene):
                 circle = Circle(radius=r)
                 circle.move_to(center_point)
 
-            return circle.scale(0.45)
+            return circle
 
         def evalue_dot_updater(matrix, d, i):
             matrix = gdisk_growing_updater(matrix, d)
@@ -47,14 +47,14 @@ class GDisk(Scene):
 
         # display complex plane
         plane = ComplexPlane(
-            x_range=[-5, 7.5],
-            y_range=[-5, 5.5]
-        ).add_coordinates().scale(0.45).align_on_border([-1, 0, 0])
+            x_range=[-1, 5.5],
+            y_range=[-1, 2.5]
+        ).add_coordinates().align_on_border([-1, 0, 0])
 
         delta = ValueTracker(0)
-        matrix_content = [[1, 0, 0],
-                          [0, 3 + 3j, 0],
-                          [0, 0, 5 + 1j]]
+        matrix_content = [[1j, 0, 0],
+                          [0, 3 + 0.5j, 0],
+                          [0, 0, 4]]
 
         matrix_tex_object = matrix_tex(matrix_content)
         matrix_tex_object.add_updater(
@@ -62,7 +62,7 @@ class GDisk(Scene):
         )
 
         disk_group = Group(plane, matrix_tex_object)
-        epsilon_Tex = MathTex(r"\epsilon: 0 \to 1 \\ A_{\epsilon}= ").next_to(matrix_tex_object, UP).shift(RIGHT*3)
+        epsilon_Tex = MathTex(r"\epsilon: 0 \to 1 \\ A_{\epsilon}= ").next_to(matrix_tex_object, UP).shift(RIGHT * 3)
         disk_group.add(epsilon_Tex)
 
         for i in range(len(matrix_content)):
