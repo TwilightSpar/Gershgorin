@@ -84,4 +84,8 @@ class GDisk(Scene):
         # display ordinate and matrix
         self.add(disk_group)
         # grow matrix from 0 to 1
+        self.play(delta.animate.set_value(0.3), run_time=3)
+        self.play(delta.animate.set_value(0), run_time=3)
+        self.play(delta.animate.set_value(0.3), run_time=3)
+        self.play(delta.animate.set_value(0.6), run_time=3)
         self.play(delta.animate.set_value(1), run_time=7)
