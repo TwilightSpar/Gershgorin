@@ -46,4 +46,4 @@ class Proof1(Scene):
         self.wait()
         self.play(Create(SurroundingRectangle(matrix_A.get_rows()[2])))
         self.play(Create(SurroundingRectangle(matrix_X_1.get_rows()[2])))
-#manim -pql Test.py Proof1
+#manim -pql Proof1.py Proof1

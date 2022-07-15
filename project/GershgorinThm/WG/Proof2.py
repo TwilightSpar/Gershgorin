@@ -4,9 +4,10 @@ from manim import *
 class Proof2(Scene):
     def construct(self):
         #圈出第k行
+        title = Tex("Proof of Thm").shift(UP * 3.5)
         Formula_3 = MathTex(r"\begin{bmatrix} a_{11} & ... & a_{1n}\\ ... &  & ... \\a_{k1} & ... & a_{kn} \\... &  & ...\\ a_{n1} & ... & a_{nn} \end{bmatrix} "
                             r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix} = \lambda "
-                            r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix}").shift(UP * 2)
+                            r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix}").shift(UP * 1.5)
         Formula_4 = MathTex(r"\lambda x_k", r"=", r"\sum_j", r"a_{kj}x_j")
         Formula_5 = MathTex(r"\lambda x_k", r"=", r"\sum_{j\ne k}", r"a_{kj}x_j", r"+", r"a_{kk}x_k")
         Formula_6 = MathTex(r"\lambda x_k", r" -a_{kk}x_k", r"=", r"\sum_{j"
@@ -23,6 +24,7 @@ class Proof2(Scene):
         Formula_12 = MathTex(r"|\lambda-a_{kk}||x_k|", r"\le", r"(\sum_{j\ne k} |a_{kj}|)", r"|x_k|")
         Formula_13 = MathTex(r"|\lambda-a_{kk}|", r"\le", r"\sum_{j\ne k} |a_{kj}|")
 
+        self.add(title)
         self.play(Write(Formula_3))
         self.wait()
 
