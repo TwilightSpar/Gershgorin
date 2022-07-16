@@ -5,9 +5,10 @@ class Proof2(Scene):
     def construct(self):
         #圈出第k行
         title = Tex("Proof of Thm").shift(UP * 3.5)
+        Formula_2 = MathTex(r"Define \quad k=\arg\max_i |x_i|").next_to(title, DOWN).scale(0.8)
         Formula_3 = MathTex(r"\begin{bmatrix} a_{11} & ... & a_{1n}\\ ... &  & ... \\a_{k1} & ... & a_{kn} \\... &  & ...\\ a_{n1} & ... & a_{nn} \end{bmatrix} "
                             r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix} = \lambda "
-                            r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix}").shift(UP * 1.5)
+                            r"\begin{bmatrix} x_1\\ ...\\ x_k \\ ... \\ x_n \end{bmatrix}").shift(UP)
         Formula_4 = MathTex(r"\lambda x_k", r"=", r"\sum_j", r"a_{kj}x_j")
         Formula_5 = MathTex(r"\lambda x_k", r"=", r"\sum_{j\ne k}", r"a_{kj}x_j", r"+", r"a_{kk}x_k")
         Formula_6 = MathTex(r"\lambda x_k", r" -a_{kk}x_k", r"=", r"\sum_{j"
@@ -24,7 +25,9 @@ class Proof2(Scene):
         Formula_12 = MathTex(r"|\lambda-a_{kk}||x_k|", r"\le", r"(\sum_{j\ne k} |a_{kj}|)", r"|x_k|")
         Formula_13 = MathTex(r"|\lambda-a_{kk}|", r"\le", r"\sum_{j\ne k} |a_{kj}|")
 
-        self.add(title)
+        rect = SurroundingRectangle(Formula_2, corner_radius=0.2)
+
+        self.add(title, Formula_2)
         self.play(Write(Formula_3))
         self.wait()
 
@@ -57,6 +60,9 @@ class Proof2(Scene):
 
         self.play(TransformMatchingTex(Formula_9, Formula_10))
         self.wait()
+        self.play(Create(rect))
+        self.wait()
+        self.remove(Formula_2, rect)
 
         self.play(TransformMatchingTex(Formula_10, Formula_11))
         self.wait()
@@ -70,5 +76,7 @@ class Proof2(Scene):
         self.wait()
 
         self.play(TransformMatchingTex(Formula_12, Formula_13))
+        self.wait()
+        self.play(Formula_13.animate.next_to(title, DOWN))
         self.wait()
 #manim -pql Proof2.py Proof2

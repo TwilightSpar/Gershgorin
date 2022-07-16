@@ -9,6 +9,7 @@ class Proof1(Scene):
         #圈出最大行
         Formula_2_1 = MathTex(r"\mbox{Example } x = \begin{bmatrix} 1\\ i \\ 2+i \end{bmatrix}, A").next_to(Formula_2, DOWN)
         Formula_2_2 = MathTex(r"= \lambda \begin{bmatrix} 1\\ i \\ 2+i \end{bmatrix}")
+        Formula_4 = MathTex(r"\lambda x_k", r"=", r"\sum_j", r"a_{kj}x_j")
         matrix_X1 = Matrix([[1], ["i"], ["2+i"]], element_alignment_corner=DOWN)
         matrix_X2 = Matrix([[1], ["i"], ["2+i"]], element_alignment_corner=DOWN)
         MGroup = VGroup(Formula_2_1, matrix_X1, Formula_2_2).arrange_in_grid(cols=4)
@@ -46,4 +47,6 @@ class Proof1(Scene):
         self.wait()
         self.play(Create(SurroundingRectangle(matrix_A.get_rows()[2])))
         self.play(Create(SurroundingRectangle(matrix_X_1.get_rows()[2])))
+        self.wait()
+        self.play(Write(Formula_4.next_to(MGroup, DOWN)))
 #manim -pql Proof1.py Proof1
