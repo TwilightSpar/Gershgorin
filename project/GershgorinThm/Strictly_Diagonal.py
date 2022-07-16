@@ -77,7 +77,7 @@ class GDisk(Scene):
             0.6).shift(2.5 * LEFT)
         self.remove(D)
         self.play(ReplacementTransform(D_inv_A, D_inv_A_D), run_time=2)
-
+        self.play(D_inv_A_D.animate.scale(1.4))
 
         self.wait(3)
         self.play(r1.animate.set_value(1), run_time=2)
