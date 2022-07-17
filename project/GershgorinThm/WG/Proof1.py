@@ -29,11 +29,12 @@ class Proof1(Scene):
         self.play(Create(rect_1))
         self.wait()
         self.play(Write(tex1))
-        self.wait()
+        self.wait(3)
 
         self.remove(MGroup, rect_1, tex1)
 
-        self.play(Formula_2.animate.align_on_border(UP), Formula_1.animate.move_to([0, 0, 0]))
+        self.play(Formula_2.animate.align_on_border(UP), Formula_1.animate.move_to([0, 0, 0]),run_time = 2)
+        self.play(Formula_2.animate.set_fill(opacity=0.5))
         self.wait()
 
         Formula_3 = MathTex(r" = \lambda ")
@@ -47,14 +48,13 @@ class Proof1(Scene):
         rect_4 = SurroundingRectangle(matrix_X_2.get_rows()[2])
 
         self.play(ReplacementTransform(Formula_1, MGroup2))
-        self.wait()
+        self.wait(3)
         self.play(Create(rect_2))
         self.play(Create(rect_3))
         self.play(Create(rect_4))
-        self.wait()
+        self.wait(3)
 
         self.play(Uncreate(rect_2), Uncreate(rect_3), Uncreate(rect_4))
-
 
         self.play(ReplacementTransform(MGroup2, Formula_4_1))
         self.wait()

@@ -64,6 +64,9 @@ class GDisk(Scene):
         self.play(Create(D_tex))
         self.wait(2)
 
+        same_evalue_tex = MathTex(r"\sigma(A) = \sigma(D^{-1} A D)").next_to(A_tex, UP *2)
+        self.play(same_evalue_tex)
+
         self.play(MoveToTarget(D_inv_tex))
 
         D_inv_A = MathTex(r"\begin{pmatrix} 1+j & 0.2 & 0.2 \\ 0.2 & 2-j & 0.2 \\ \frac{1}{1+\epsilon} 0.2 & \frac{1}{1+\epsilon} 0.3 & \frac{1}{1+\epsilon}(-0.4-0.3j) \end{pmatrix}").scale(0.6).shift(3 * LEFT)
