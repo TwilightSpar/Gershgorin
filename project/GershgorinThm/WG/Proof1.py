@@ -3,20 +3,20 @@ from manim import *
 
 class Proof1(Scene):
     def construct(self):
-        title = Tex("Proof of Thm").shift(UP * 3.5)
-        Formula_1 = MathTex(r"Ax=\lambda x,\forall \lambda").shift(UP * 2.5)
+
+        Formula_1 = MathTex(r"Ax=\lambda x,\forall \lambda").align_on_border(UP)
         Formula_2 = MathTex(r"Define \quad k=\arg\max_i |x_i|").next_to(Formula_1, DOWN)
         #圈出最大行
-        Formula_2_1 = MathTex(r"\mbox{Example } x = \begin{bmatrix} 1\\ i \\ 2+i \end{bmatrix}, A").next_to(Formula_2, DOWN)
+        Formula_2_1 = MathTex(r"\mbox{Example } x = ").next_to(Formula_2, DOWN)
         Formula_2_2 = MathTex(r"= \lambda \begin{bmatrix} 1\\ i \\ 2+i \end{bmatrix}")
-        Formula_4 = MathTex(r"\lambda x_k", r"=", r"\sum_j", r"a_{kj}x_j")
+        Formula_4_1 = MathTex(r"\sum_j", r"a_{kj}x_j", r"=", r"\lambda x_k")
+        Formula_4_2 = MathTex(r"\lambda x_k", r"=", r"\sum_j", r"a_{kj}x_j")
         matrix_X1 = Matrix([[1], ["i"], ["2+i"]], element_alignment_corner=DOWN)
         matrix_X2 = Matrix([[1], ["i"], ["2+i"]], element_alignment_corner=DOWN)
-        MGroup = VGroup(Formula_2_1, matrix_X1, Formula_2_2).arrange_in_grid(cols=4)
+        MGroup = VGroup(Formula_2_1, matrix_X1).arrange_in_grid(cols=2)
 
-        rect = SurroundingRectangle(matrix_X1.get_rows()[2])
-        tex1 = MathTex(r"k = 3", color=YELLOW).scale(0.7).next_to(rect, DOWN)
-        self.play(Write(title))
+        rect_1 = SurroundingRectangle(matrix_X1.get_rows()[2])
+        tex1 = MathTex(r"k = 3", color=YELLOW).scale(0.7).next_to(rect_1, RIGHT * 1.5)
 
         self.play(Write(Formula_1))
         self.wait()
@@ -26,16 +26,14 @@ class Proof1(Scene):
 
         self.play(Write(MGroup))
         self.wait()
-        self.play(Create(rect))
+        self.play(Create(rect_1))
         self.wait()
         self.play(Write(tex1))
         self.wait()
 
-        self.remove(MGroup)
+        self.remove(MGroup, rect_1, tex1)
 
-        self.remove(Formula_1)
-        self.play(Formula_2.animate.next_to(title, DOWN))
-        self.play(Write(Formula_1.next_to(Formula_2, DOWN)))
+        self.play(Formula_2.animate.align_on_border(UP), Formula_1.animate.move_to([0, 0, 0]))
         self.wait()
 
         Formula_3 = MathTex(r" = \lambda ")
@@ -43,10 +41,23 @@ class Proof1(Scene):
         matrix_X_1 = Matrix([["x_1"], ["..."], ["x_k"], ["..."], ["x_n"]], element_alignment_corner=DOWN)
         matrix_X_2 = Matrix([["x_1"], ["..."], ["x_k"], ["..."], ["x_n"]], element_alignment_corner=DOWN)
         MGroup2 = VGroup(matrix_A, matrix_X_1, Formula_3, matrix_X_2).arrange_in_grid(cols=4)
+
+        rect_2 = SurroundingRectangle(matrix_A.get_rows()[2])
+        rect_3 = SurroundingRectangle(matrix_X_1.get_columns()[0])
+        rect_4 = SurroundingRectangle(matrix_X_2.get_rows()[2])
+
         self.play(ReplacementTransform(Formula_1, MGroup2))
         self.wait()
-        self.play(Create(SurroundingRectangle(matrix_A.get_rows()[2])))
-        self.play(Create(SurroundingRectangle(matrix_X_1.get_rows()[2])))
+        self.play(Create(rect_2))
+        self.play(Create(rect_3))
+        self.play(Create(rect_4))
         self.wait()
-        self.play(Write(Formula_4.next_to(MGroup, DOWN)))
+
+        self.play(Uncreate(rect_2), Uncreate(rect_3), Uncreate(rect_4))
+
+
+        self.play(ReplacementTransform(MGroup2, Formula_4_1))
+        self.wait()
+        self.play(TransformMatchingTex(Formula_4_1, Formula_4_2))
+        self.wait()
 #manim -pql Proof1.py Proof1
